@@ -44,7 +44,7 @@ if (( CURRENT == 1 )); then
 fi
 
 case "$words[1]" in
-  remove|path|info|update)
+  remove|path|info|update|run)
     _lib_installed
     _wanted installed_libs expl 'installed formulae' compadd -a installed_libs ;;
 esac
