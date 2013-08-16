@@ -1,0 +1,50 @@
+#compdef haxelib
+#autoload
+
+# haxelib zsh completion, based on homebrew completion
+
+_lib_installed() {
+  installed_libs=(`haxelib list`)
+}
+
+local -a _1st_arguments
+_1st_arguments=(
+  'install:install a given library, or all libraries from a hxml file'
+  'list:list all installed libraries'
+  'upgrade:upgrade all installed libraries'
+  'update:update a single library'
+  'selfupdate:update haxelib itself'
+  'remove:remove a given library/version'
+  'set:set the current version for a library'
+  'search:list libraries matching a word'
+  'info:list informations on a given library'
+  'user:list informations on a given user'
+  'register:register a new user'
+  'submit:submit or update a library package'
+  'setup:set the haxelib repository path'
+  'convertxml:convert haxelib.xml file to haxelib.json'
+  'config:print the repository path'
+  'path:give paths to libraries'
+  'run:run the specified library with parameters'
+  'local:install the specified package locally'
+  'dev:set the development directory for a given library'
+  'git:uses git repository as library'
+  'proxy:setup the Http proxy'
+)
+
+local expl
+local -a _lib_installed
+
+_arguments \
+  '*:: :->subcmds' && return 0
+
+if (( CURRENT == 1 )); then
+  _describe -t commands "haxelib subcommand" _1st_arguments
+  return
+fi
+
+case "$words[1]" in
+  remove|path|info|update)
+    _lib_installed
+    _wanted installed_libs expl 'installed formulae' compadd -a installed_libs ;;
+esac
