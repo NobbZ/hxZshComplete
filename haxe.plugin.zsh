@@ -1,3 +1,5 @@
+export HXCOMPLETEVERSION="0.1.0"
+
 # Aliases
 alias   hl='haxelib'
 compdef hl=haxelib
