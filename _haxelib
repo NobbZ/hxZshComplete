@@ -3,8 +3,17 @@
 
 # haxelib zsh completion, based on homebrew completion
 
+zmodload zsh/regex
+
 _lib_installed() {
-  installed_libs=(`haxelib list`)
+  #installed_libs=(`haxelib list`)
+  eval $'installed_libs=( ${(s.\n.)"$(haxelib list)"} )'
+  installed_libs=("${(s/ /)installed_libs}")
+#  for i in $array do
+#    if [[ $i -regex-match ^\[.*\]$ ]]
+#      $i =
+#    fi
+#  done
 }
 
 local -a _1st_arguments
