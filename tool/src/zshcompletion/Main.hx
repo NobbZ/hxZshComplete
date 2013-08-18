@@ -12,14 +12,7 @@ class Main {
   }
 
   static public function remoteList():Void {
-    if(sys.FileSystem.exists("/tmp/haxe-remote-list") && (sys.FileSystem.stat("/tmp/haxe-remote-list").mtime.getTime() > DateTools.delta(Date.now(), -1 * DateTools.minutes(30)).getTime())) {
-      var list = File.read("/tmp/haxe-remote-list");
-      while ( !list.eof() ) {
-        Sys.println(list.readLine());
-      }
-    } else {
-       scrapeRemoteList();
-    }
+    scrapeRemoteList();
   }
 
   static private function scrapeRemoteList():Void {
@@ -60,7 +53,7 @@ class Main {
     // TODO: Write the file:
     // $library:$description
     for(a in 1...(descriptions.length)) {
-      trace('${descriptions[a]}:${libraries[a]}');
+      Sys.println('${libraries[a]}:${descriptions[a]}');
     }
   }
 }
