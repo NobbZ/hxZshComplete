@@ -24,4 +24,5 @@ clean:
 
 install: all
 	@echo "You have to run this command as root!"
-	ln -s $(BINFILE) $(BINFILE:$(BINPATH)%=/usr/bin/%)
+	ln -f $(BINFILE:%=./%) $(BINFILE:$(BINPATH)%=/usr/bin/%)
+	chmod 755 $(BINFILE:$(BINPATH)%=/usr/bin/%)
