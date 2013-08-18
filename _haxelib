@@ -13,6 +13,10 @@ _lib_installed() {
   done
 }
 
+_lib_remote() {
+  eval $'remote_libs=( ${(s.\n.)"$(zshcomplete remote)"} )'
+}
+
 local -a _1st_arguments
 _1st_arguments=(
   'install:install a given library, or all libraries from a hxml file'
@@ -40,6 +44,9 @@ _1st_arguments=(
 
 local expl
 local -a _lib_installed
+local -a _lib_remote
+local -a installed_libs
+local -a remote_libs
 
 _arguments \
   '*:: :->subcmds' && return 0
@@ -52,5 +59,9 @@ fi
 case "$words[1]" in
   remove|path|info|update|run)
     _lib_installed
-    _wanted installed_libs expl 'installed formulae' compadd -a installed_libs ;;
+    _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
+  install)
+    _lib_remote
+    _describe -t commands 'remote libraries' remote_libs ;;
+    #_wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
 esac
