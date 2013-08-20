@@ -4,7 +4,11 @@
 # haxelib zsh completion, based on homebrew completion
 
 _lib_installed() {
-  eval $'installed_libs=( ${(s.\n.)"$(haxelib list | cut -d ":" -f 1)"} )'
+  local cache_file=/tmp/haxelib_installed~
+  if [[ ! -f $cache_file(mm-10) ]]; then
+    haxelib list | cut -d ":" -f 1 > "$cache_file"
+  fi
+  eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
 }
 
 _lib_remote() {
