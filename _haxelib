@@ -64,6 +64,6 @@ case "$words[1]" in
     _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
   install)
     _lib_remote
-    _describe -t commands 'remote libraries' remote_libs ;;
-    #_wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
+    #_describe -t commands 'remote libraries' remote_libs ;;
+    _wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
 esac
