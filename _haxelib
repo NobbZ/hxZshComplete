@@ -59,6 +59,8 @@ if (( CURRENT == 1 )); then
 fi
 
 case "$words[1]" in
+  list|upgrade|selfupdate)
+    compadd -a "" ;;
   remove|path|info|update|run)
     _lib_installed
     _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
@@ -66,4 +68,10 @@ case "$words[1]" in
     _lib_remote
     #_describe -t commands 'remote libraries' remote_libs ;;
     _wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
+  set)
+    _lib_installed
+    if (( CURRENT == 2 )); then
+      _lib_installed
+      _wanted installed_libs expl 'choose library you want to change active version' compadd -a installed_libs
+    fi ;;
 esac
