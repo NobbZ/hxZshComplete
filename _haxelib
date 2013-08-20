@@ -12,7 +12,11 @@ _lib_installed() {
 }
 
 _lib_remote() {
-  eval $'remote_libs=( ${(s.\n.)"$(zshcomplete remote)"} )'
+  local cache_file=/tmp/haxelib_remote~
+  if [[ ! -f $cache_file(mh-1) ]]; then
+    zshcomplete remote > "$cache_file"
+  fi
+  eval $'remote_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
 }
 
 local -a _1st_arguments
