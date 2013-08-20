@@ -3,14 +3,8 @@
 
 # haxelib zsh completion, based on homebrew completion
 
-zmodload zsh/regex
-
 _lib_installed() {
-  eval $'installed_libs=( ${(s.\n.)"$(haxelib list)"} )'
-  for (( i = 1; i <= $#installed_libs; i++ )) do
-    [[ $installed_libs[i] -regex-match ^(.*):.*$ ]]
-    installed_libs[i]=$match
-  done
+  eval $'installed_libs=( ${(s.\n.)"$(haxelib list | cut -d ":" -f 1)"} )'
 }
 
 _lib_remote() {
