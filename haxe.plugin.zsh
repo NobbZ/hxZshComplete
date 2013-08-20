@@ -10,3 +10,4 @@ compdef _haxelib hlr=haxelib-run
 alias	hll='haxelib list'
 compdef _haxelib hll=haxelib-list
 
+alias   hlinvalidate='rm -f /tmp/haxelib_*' #invalidates completion cache.
