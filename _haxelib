@@ -1,77 +1,209 @@
 #compdef haxelib
 #autoload
 
-# haxelib zsh completion, based on homebrew completion
+zmodload zsh/regex
 
-_lib_installed() {
-  local cache_file=/tmp/haxelib_installed~
-  if [[ ! -f $cache_file(mm-10) ]]; then
-    haxelib list | cut -d ":" -f 1 > "$cache_file"
+_haxelib() {
+  if (( CURRENT > 2 )); then
+    # Remember the subcommand name
+    local cmd=${words[2]}
+    # Set the context for the subcommand.
+    curcontext="${curcontext%:*:*}:haxelib-$cmd"
+    # Narrow the range of words we are looking at to exclude `haxelib´
+    (( CURRENT-- ))
+    shift words
+    # Run the completion for the subcommand
+    _haxelib_cmd_$cmd
+  else
+    local hline
+    local -a cmdlist
+    _call_program help-commands haxelib | while read -A hline; do
+      (( ${#hline} < 4 )) && continue
+      [[ $hline[1] = (#i)Haxe ]] && continue
+      [[ $hline[1] = (#i)Usage ]] && continue
+      [[ $hline[1] = (#i)commands ]] && continue
+      cmdlist=($cmdlist "${hline[1]}:${hline[3,-1]}")
+    done
+    _describe -t haxelib-commands "Haxelib command" cmdlist
   fi
-  eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
 }
 
-_lib_remote() {
-  local cache_file=/tmp/haxelib_remote~
-  if [[ ! -f $cache_file(mh-1) ]]; then
-    zshcomplete remote > "$cache_file"
-  fi
-  eval $'remote_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
+_haxelib_local_libs() {
+  # local cache_file=/tmp/haxelib_installed~
+  # if [[ ! -f $cache_file(mm-10) ]]; then
+  #   haxelib list | cut -d ":" -f 1 > "$cache_file"
+  # fi
+  # eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
+#   _arguments : ( ${(s.
+# .)"$(cat $cache_file)"} )
+  # echo $installed_libs
+  eval $'installed_libs=( ${(s.\n.)"$(haxelib list | cut -d ":" -f 1)"} )'
 }
 
-local -a _1st_arguments
-_1st_arguments=(
-  'install:install a given library, or all libraries from a hxml file'
-  'list:list all installed libraries'
-  'upgrade:upgrade all installed libraries'
-  'update:update a single library'
-  'selfupdate:update haxelib itself'
-  'remove:remove a given library/version'
-  'set:set the current version for a library'
-  'search:list libraries matching a word'
-  'info:list informations on a given library'
-  'user:list informations on a given user'
-  'register:register a new user'
-  'submit:submit or update a library package'
-  'setup:set the haxelib repository path'
-  'convertxml:convert haxelib.xml file to haxelib.json'
-  'config:print the repository path'
-  'path:give paths to libraries'
-  'run:run the specified library with parameters'
-  'local:install the specified package locally'
-  'dev:set the development directory for a given library'
-  'git:uses git repository as library'
-  'proxy:setup the Http proxy'
-)
+_haxelib_remote_libs() {
 
-local expl
-local -a _lib_installed
-local -a _lib_remote
+}
+
 local -a installed_libs
-local -a remote_libs
 
-_arguments \
-  '*:: :->subcmds' && return 0
+_haxelib_cmd_install() {
+  #:install a given library, or all libraries from a hxml file'
+}
 
-if (( CURRENT == 1 )); then
-  _describe -t commands "haxelib subcommand" _1st_arguments
-  return
-fi
+_haxelib_cmd_list() {
+  #:list all installed libraries'
+}
 
-case "$words[1]" in
-  list|upgrade|selfupdate)
-    compadd -a "" ;;
-  remove|path|info|update|run)
-    _lib_installed
-    _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
-  install)
-    _lib_remote
-    #_describe -t commands 'remote libraries' remote_libs ;;
-    _wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
-  set)
-    _lib_installed
-    if (( CURRENT == 2 )); then
-      _lib_installed
-      _wanted installed_libs expl 'choose library you want to change active version' compadd -a installed_libs
-    fi ;;
-esac
+_haxelib_cmd_upgrade() {
+  #:upgrade all installed libraries'
+}
+
+_haxelib_cmd_update() {
+  _haxelib_local_libs
+  _wanted installed_libs expl 'installed libraries' compadd -a installed_libs
+  #_arguments : \
+    # '-x' \
+    # '-y'
+}
+
+_haxelib_cmd_selfupdate() {
+  #:update haxelib itself'
+}
+
+_haxelib_cmd_remove() {
+  #:remove a given library/version'
+}
+
+_haxelib_cmd_set() {
+  #:set the current version for a library'
+}
+
+_haxelib_cmd_search() {
+  #:list libraries matching a word'
+}
+_haxelib_cmd_info() {
+  #:list informations on a given library'
+}
+
+_haxelib_cmd_user() {
+  #:list informations on a given user'
+}
+
+_haxelib_cmd_register() {
+  #:register a new user'
+}
+
+_haxelib_cmd_submit() {
+  #:submit or update a library package'
+}
+
+_haxelib_cmd_setup() {
+  #:set the haxelib repository path'
+}
+
+_haxelib_cmd_convertxml() {
+  #:convert haxelib.xml file to haxelib.json'
+}
+
+_haxelib_cmd_config() {
+  #:print the repository path'
+}
+
+_haxelib_cmd_path() {
+  #:give paths to libraries'
+}
+
+_haxelib_cmd_run() {
+  #:run the specified library with parameters'
+}
+
+_haxelib_cmd_local() {
+  #:install the specified package locally'
+}
+
+_haxelib_cmd_dev() {
+  #:set the development directory for a given library'
+}
+
+_haxelib_cmd_git() {
+  #:uses git repository as library'
+}
+
+_haxelib_cmd_proxy() {
+  #:setup the Http proxy'
+}
+
+_haxelib "$@"
+
+# _lib_installed() {
+#   local cache_file=/tmp/haxelib_installed~
+#   if [[ ! -f $cache_file(mm-10) ]]; then
+#     haxelib list | cut -d ":" -f 1 > "$cache_file"
+#   fi
+#   eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
+# }
+
+# _lib_remote() {
+#   local cache_file=/tmp/haxelib_remote~
+#   if [[ ! -f $cache_file(mh-1) ]]; then
+#     zshcomplete remote > "$cache_file"
+#   fi
+#   eval $'remote_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
+# }
+
+# local -a _1st_arguments
+# _1st_arguments=(
+#   'install:install a given library, or all libraries from a hxml file'
+#   'list:list all installed libraries'
+#   'upgrade:upgrade all installed libraries'
+#   'update:update a single library'
+#   'selfupdate:update haxelib itself'
+#   'remove:remove a given library/version'
+#   'set:set the current version for a library'
+#   'search:list libraries matching a word'
+#   'info:list informations on a given library'
+#   'user:list informations on a given user'
+#   'register:register a new user'
+#   'submit:submit or update a library package'
+#   'setup:set the haxelib repository path'
+#   'convertxml:convert haxelib.xml file to haxelib.json'
+#   'config:print the repository path'
+#   'path:give paths to libraries'
+#   'run:run the specified library with parameters'
+#   'local:install the specified package locally'
+#   'dev:set the development directory for a given library'
+#   'git:uses git repository as library'
+#   'proxy:setup the Http proxy'
+# )
+
+# local expl
+# local -a _lib_installed
+# local -a _lib_remote
+# local -a installed_libs
+# local -a remote_libs
+
+# _arguments \
+#   '*:: :->subcmds' && return 0
+
+# if (( CURRENT == 1 )); then
+#   _describe -t commands "haxelib subcommand" _1st_arguments
+#   return
+# fi
+
+# case "$words[1]" in
+#   list|upgrade|selfupdate)
+#     compadd -a "" ;;
+#   remove|path|info|update|run)
+#     _lib_installed
+#     _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
+#   install)
+#     _lib_remote
+#     #_describe -t commands 'remote libraries' remote_libs ;;
+#     _wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
+#   set)
+#     _lib_installed
+#     if (( CURRENT == 2 )); then
+#       _lib_installed
+#       _wanted installed_libs expl 'choose library you want to change active version' compadd -a installed_libs
+#     fi ;;
+# esac
