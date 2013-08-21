@@ -29,14 +29,6 @@ _haxelib() {
 }
 
 _haxelib_local_libs() {
-  # local cache_file=/tmp/haxelib_installed~
-  # if [[ ! -f $cache_file(mm-10) ]]; then
-  #   haxelib list | cut -d ":" -f 1 > "$cache_file"
-  # fi
-  # eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
-#   _arguments : ( ${(s.
-# .)"$(cat $cache_file)"} )
-  # echo $installed_libs
   eval $'installed_libs=( ${(s.\n.)"$(haxelib list | cut -d ":" -f 1)"} )'
 }
 
@@ -47,7 +39,6 @@ _haxelib_remote_libs() {
 local -a installed_libs
 
 _haxelib_cmd_install() {
-  #:install a given library, or all libraries from a hxml file'
   _path_files -/ -g "*.hxml"
   compadd -x "Insufficient completion for haxelib-install, only hxml so far!"
 }
@@ -67,97 +58,72 @@ _haxelib_cmd_update() {
 
 _haxelib_cmd_selfupdate() {
   compadd -x "$cmd-completion not implemented!"
-  #:update haxelib itself'
 }
 
 _haxelib_cmd_remove() {
   compadd -x "$cmd-completion not implemented!"
-  #:remove a given library/version'
 }
 
 _haxelib_cmd_set() {
   compadd -x "$cmd-completion not implemented!"
-  #:set the current version for a library'
 }
 
 _haxelib_cmd_search() {
   compadd -x "$cmd-completion not implemented!"
-  #:list libraries matching a word'
 }
 _haxelib_cmd_info() {
   compadd -x "$cmd-completion not implemented!"
-  #:list informations on a given library'
 }
 
 _haxelib_cmd_user() {
   compadd -x "$cmd-completion not implemented!"
-  #:list informations on a given user'
 }
 
 _haxelib_cmd_register() {
   compadd -x "$cmd-completion not implemented!"
-  #:register a new user'
 }
 
 _haxelib_cmd_submit() {
   compadd -x "$cmd-completion not implemented!"
-  #:submit or update a library package'
 }
 
 _haxelib_cmd_setup() {
   compadd -x "$cmd-completion not implemented!"
-  #:set the haxelib repository path'
 }
 
 _haxelib_cmd_convertxml() {
   compadd -x "$cmd-completion not implemented!"
-  #:convert haxelib.xml file to haxelib.json'
 }
 
 _haxelib_cmd_config() {
   compadd -x "$cmd-completion not implemented!"
-  #:print the repository path'
 }
 
 _haxelib_cmd_path() {
   compadd -x "$cmd-completion not implemented!"
-  #:give paths to libraries'
 }
 
 _haxelib_cmd_run() {
   compadd -x "$cmd-completion not implemented!"
-  #:run the specified library with parameters'
 }
 
 _haxelib_cmd_local() {
   compadd -x "$cmd-completion not implemented!"
-  #:install the specified package locally'
 }
 
 _haxelib_cmd_dev() {
   compadd -x "$cmd-completion not implemented!"
-  #:set the development directory for a given library'
 }
 
 _haxelib_cmd_git() {
   compadd -x "$cmd-completion not implemented!"
-  #:uses git repository as library'
 }
 
 _haxelib_cmd_proxy() {
   compadd -x "$cmd-completion not implemented!"
-  #:setup the Http proxy'
 }
 
 _haxelib "$@"
-
-# _lib_installed() {
-#   local cache_file=/tmp/haxelib_installed~
-#   if [[ ! -f $cache_file(mm-10) ]]; then
-#     haxelib list | cut -d ":" -f 1 > "$cache_file"
-#   fi
-#   eval $'installed_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
-# }
 
 # _lib_remote() {
 #   local cache_file=/tmp/haxelib_remote~
@@ -167,59 +133,3 @@ _haxelib "$@"
 #   eval $'remote_libs=( ${(s.\n.)"$(cat $cache_file)"} )'
 # }
 
-# local -a _1st_arguments
-# _1st_arguments=(
-#   'install:install a given library, or all libraries from a hxml file'
-#   'list:list all installed libraries'
-#   'upgrade:upgrade all installed libraries'
-#   'update:update a single library'
-#   'selfupdate:update haxelib itself'
-#   'remove:remove a given library/version'
-#   'set:set the current version for a library'
-#   'search:list libraries matching a word'
-#   'info:list informations on a given library'
-#   'user:list informations on a given user'
-#   'register:register a new user'
-#   'submit:submit or update a library package'
-#   'setup:set the haxelib repository path'
-#   'convertxml:convert haxelib.xml file to haxelib.json'
-#   'config:print the repository path'
-#   'path:give paths to libraries'
-#   'run:run the specified library with parameters'
-#   'local:install the specified package locally'
-#   'dev:set the development directory for a given library'
-#   'git:uses git repository as library'
-#   'proxy:setup the Http proxy'
-# )
-
-# local expl
-# local -a _lib_installed
-# local -a _lib_remote
-# local -a installed_libs
-# local -a remote_libs
-
-# _arguments \
-#   '*:: :->subcmds' && return 0
-
-# if (( CURRENT == 1 )); then
-#   _describe -t commands "haxelib subcommand" _1st_arguments
-#   return
-# fi
-
-# case "$words[1]" in
-#   list|upgrade|selfupdate)
-#     compadd -a "" ;;
-#   remove|path|info|update|run)
-#     _lib_installed
-#     _wanted installed_libs expl 'installed libraries' compadd -a installed_libs ;;
-#   install)
-#     _lib_remote
-#     #_describe -t commands 'remote libraries' remote_libs ;;
-#     _wanted remote_libs expl 'remote libraries' compadd -a remote_libs ;;
-#   set)
-#     _lib_installed
-#     if (( CURRENT == 2 )); then
-#       _lib_installed
-#       _wanted installed_libs expl 'choose library you want to change active version' compadd -a installed_libs
-#     fi ;;
-# esac
