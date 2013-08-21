@@ -58,8 +58,7 @@ _haxelib_cmd_list() {
 }
 
 _haxelib_cmd_upgrade() {
-  _message "$cmd-completion not implemented!"
-  #:upgrade all installed libraries'
+  return 1
 }
 
 _haxelib_cmd_update() {
