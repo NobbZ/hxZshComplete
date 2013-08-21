@@ -33,14 +33,16 @@ _haxelib_local_libs() {
 }
 
 _haxelib_remote_libs() {
-
+  eval $'remote_libs=( ${(s.\n.)"%(zshcomplete remote)"} )'
 }
 
 local -a installed_libs
+local -a remote_libs
 
 _haxelib_cmd_install() {
+  _haxelib_remote_libs
   _path_files -/ -g "*.hxml"
-  compadd -x "Insufficient completion for haxelib-install, only hxml so far!"
+  _wanted remote-libs expl '' compadd -x "Insufficient completion for haxelib-install, only hxml so far!" -a remote_libs
 }
 
 _haxelib_cmd_list() {
