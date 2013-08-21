@@ -48,7 +48,8 @@ local -a installed_libs
 
 _haxelib_cmd_install() {
   #:install a given library, or all libraries from a hxml file'
-  _message "$cmd-completion not implemented!"
+  _path_files -/ -g "*.hxml"
+  compadd -x "Insufficient completion for haxelib-install, only hxml so far!"
 }
 
 _haxelib_cmd_list() {
