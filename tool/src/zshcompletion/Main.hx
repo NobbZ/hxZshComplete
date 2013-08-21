@@ -53,7 +53,8 @@ class Main {
     // TODO: Write the file:
     // $library:$description
     for(a in 1...(descriptions.length)) {
-      Sys.println('${libraries[a]}:${descriptions[a]}');
+//      Sys.println('${libraries[a]}:${descriptions[a]}');
+        Sys.println('${libraries[a]}');
     }
   }
 }
