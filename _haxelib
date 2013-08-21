@@ -12,6 +12,10 @@ _haxelib() {
     # Narrow the range of words we are looking at to exclude `haxelib´
     (( CURRENT-- ))
     shift words
+    case "$cmd" in
+      upgrade|selfupdate)
+        return 1;;
+    esac
     # Run the completion for the subcommand
     _haxelib_cmd_$cmd
   else
@@ -49,17 +53,9 @@ _haxelib_cmd_list() {
   compadd -x "No completion so far for haxelib list"
 }
 
-_haxelib_cmd_upgrade() {
-  return 1
-}
-
 _haxelib_cmd_update() {
   _haxelib_local_libs
   _wanted installed-libs expl '' compadd -x "Matching haxe libraries" -a installed_libs
-}
-
-_haxelib_cmd_selfupdate() {
-  compadd -x "$cmd-completion not implemented!"
 }
 
 _haxelib_cmd_remove() {
