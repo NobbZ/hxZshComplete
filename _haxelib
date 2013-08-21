@@ -13,7 +13,7 @@ _haxelib() {
     (( CURRENT-- ))
     shift words
     case "$cmd" in
-      upgrade|selfupdate)
+      upgrade|selfupdate|register)
         return 1;;
     esac
     # Run the completion for the subcommand
@@ -59,7 +59,8 @@ _haxelib_cmd_update() {
 }
 
 _haxelib_cmd_remove() {
-  compadd -x "$cmd-completion not implemented!"
+  _haxelib_local_libs
+  _wanted installed_libs expl '' compadd -x "Matching haxe libraries" -a installed_libs
 }
 
 _haxelib_cmd_set() {
@@ -74,10 +75,6 @@ _haxelib_cmd_info() {
 }
 
 _haxelib_cmd_user() {
-  compadd -x "$cmd-completion not implemented!"
-}
-
-_haxelib_cmd_register() {
   compadd -x "$cmd-completion not implemented!"
 }
 
