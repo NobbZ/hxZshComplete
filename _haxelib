@@ -53,8 +53,7 @@ _haxelib_cmd_install() {
 }
 
 _haxelib_cmd_list() {
-  _message "$cmd-completion not implemented!"
-  #:list all installed libraries'
+  compadd -x "No completion so far for haxelib list"
 }
 
 _haxelib_cmd_upgrade() {
@@ -63,91 +62,90 @@ _haxelib_cmd_upgrade() {
 
 _haxelib_cmd_update() {
   _haxelib_local_libs
-  #_values $installed_libs $(ls *.hxml)
-  _wanted installed-libs expl 'installed libraries' compadd -X "Matching haxe libraries" -a installed_libs
+  _wanted installed-libs expl '' compadd -x "Matching haxe libraries" -a installed_libs
 }
 
 _haxelib_cmd_selfupdate() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:update haxelib itself'
 }
 
 _haxelib_cmd_remove() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:remove a given library/version'
 }
 
 _haxelib_cmd_set() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:set the current version for a library'
 }
 
 _haxelib_cmd_search() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:list libraries matching a word'
 }
 _haxelib_cmd_info() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:list informations on a given library'
 }
 
 _haxelib_cmd_user() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:list informations on a given user'
 }
 
 _haxelib_cmd_register() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:register a new user'
 }
 
 _haxelib_cmd_submit() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:submit or update a library package'
 }
 
 _haxelib_cmd_setup() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:set the haxelib repository path'
 }
 
 _haxelib_cmd_convertxml() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:convert haxelib.xml file to haxelib.json'
 }
 
 _haxelib_cmd_config() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:print the repository path'
 }
 
 _haxelib_cmd_path() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:give paths to libraries'
 }
 
 _haxelib_cmd_run() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:run the specified library with parameters'
 }
 
 _haxelib_cmd_local() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:install the specified package locally'
 }
 
 _haxelib_cmd_dev() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:set the development directory for a given library'
 }
 
 _haxelib_cmd_git() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:uses git repository as library'
 }
 
 _haxelib_cmd_proxy() {
-  _message "$cmd-completion not implemented!"
+  compadd -x "$cmd-completion not implemented!"
   #:setup the Http proxy'
 }
 
