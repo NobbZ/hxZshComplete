@@ -18,6 +18,7 @@ $ git clone git://github.com/hxKraut/hxZshComplete.git ~/.hxZshComplete
 
 ```bash
 source ~/.hxZshComplete/haxe.zsh
+export FPATH=($FPATH ~/.hxZshComplete
 ```
 
 * Re-Source your `~/.zshrc` in every open terminal (or just restart them):
