@@ -25,6 +25,7 @@ $ sudo make install
 
 ```bash
 source ~/.hxZshComplete/haxe.zsh
+export FPATH=($FPATH ~/.hxZshComplete
 ```
 
 * Re-Source your `~/.zshrc` in every open terminal (or just restart them):
